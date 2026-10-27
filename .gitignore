@@ -1,0 +1,21 @@
+# Maven target (arquivos compilados e pacotes gerados .war, .jar)
+target/
+**/target/
+
+# Logs e arquivos temporários
+*.log
+temp/
+
+# IDEs e Editores
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# Sistema operacional
+Thumbs.db
+Desktop.ini
+.DS_Store
+
