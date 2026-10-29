@@ -1,33 +1,55 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:p="primefaces">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="primefaces">
 
 <h:head>
-    <title>Plataforma de Educação Financeira</title>
+    <title>Dashboard - Plataforma de Educação Financeira</title>
 </h:head>
 
-<h:body
-    style="background-color: #f4f6f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 30px;">
+<h:body style="background-color: #f4f6f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px;">
 
-    <p:panel header="Ambiente Configurado com Sucesso!"
-        style="max-width: 700px; margin: 0 auto; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
-        <div style="padding: 10px 0;">
-            <h3 style="color: #2c3e50; margin-top: 0;">Plataforma de Educação Financeira &amp; Chatbot IA</h3>
-            <p style="color: #555; line-height: 1.6;">
-                Este teste valida que o <strong>Jakarta Server Faces (JSF 4.0)</strong>,
-                o <strong>Apache Tomcat 10</strong> e a biblioteca <strong>PrimeFaces 14</strong>
-                estão integrados e renderizando corretamente no navegador.
-            </p>
-        </div>
+    <div style="max-width: 900px; margin: 0 auto;">
+        <!-- Barra Superior com Boas-Vindas e Botão de Logout -->
+        <h:form id="formTopBar">
+            <p:toolbar style="margin-bottom: 20px; border-radius: 8px;">
+                <f:facet name="left">
+                    <span style="font-weight: bold; font-size: 1.1rem; color: #1e3c72;">
+                        <i class="pi pi-chart-line" style="margin-right: 8px;"></i>
+                        Plataforma de Educação Financeira
+                    </span>
+                </f:facet>
+                <f:facet name="right">
+                    <span style="margin-right: 15px; color: #555;">
+                        Olá, <strong>#{loginBean.usuarioLogado.nome}</strong> 
+                        <p:tag value="#{loginBean.usuarioLogado.perfil}" severity="info" style="margin-left: 5px;" />
+                    </span>
+                    <p:commandButton value="Sair" icon="pi pi-power-off" 
+                                     action="#{loginBean.logout}" 
+                                     styleClass="ui-button-outlined ui-button-danger" />
+                </f:facet>
+            </p:toolbar>
+        </h:form>
 
-        <p:divider />
+        <!-- Painel Central de Status -->
+        <p:panel header="Autenticação e Sessão Validadas!" style="box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border-radius: 8px;">
+            <div style="padding: 10px 0;">
+                <h3 style="color: #2c3e50; margin-top: 0;">Bem-vindo à área logada da plataforma!</h3>
+                <p style="color: #555; line-height: 1.6;">
+                    Este acesso comprova que o fluxo de <strong>Cadastro</strong>, a <strong>criptografia BCrypt</strong>, 
+                    a <strong>Sessão CDI (#{loginBean.usuarioLogado.email})</strong> e o 
+                    <strong>Filtro de Segurança HTTP (AutorizacaoFilter)</strong> estão funcionando perfeitamente em conjunto com o PostgreSQL.
+                </p>
+            </div>
 
-        <div style="display: flex; gap: 10px; margin-top: 15px;">
-            <p:button value="PrimeFaces Ativo" icon="pi pi-check" styleClass="ui-button-success" />
-            <p:button value="Documentação" icon="pi pi-external-link" href="https://www.primefaces.org" target="_blank"
-                styleClass="ui-button-outlined" />
-        </div>
-    </p:panel>
+            <p:divider />
+
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <p:button value="Próxima Etapa: Cursos" icon="pi pi-arrow-right" styleClass="ui-button-success" disabled="true" />
+            </div>
+        </p:panel>
+    </div>
 
 </h:body>
-
 </html>

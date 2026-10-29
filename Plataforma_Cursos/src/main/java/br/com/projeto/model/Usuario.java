@@ -45,7 +45,7 @@ public class Usuario implements Serializable {
             this.perfil = PerfilUsuario.USER;
         }
     }
-
+ 
     // Getters e Setters
     public Long getId() {
         return id;
