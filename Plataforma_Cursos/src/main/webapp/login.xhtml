@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="primefaces">
+
+<h:head>
+    <title>Login - Plataforma de Educação Financeira</title>
+</h:head>
+
+<h:body style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+
+    <div style="width: 100%; max-width: 420px; padding: 20px;">
+        <p:card style="box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-radius: 12px;">
+            <f:facet name="title">
+                <div style="text-align: center; color: #2c3e50; padding-bottom: 5px;">
+                    <i class="pi pi-chart-line" style="font-size: 2.2rem; color: #1e3c72; margin-bottom: 10px;"></i>
+                    <h2 style="margin: 0; font-size: 1.5rem;">Educação Financeira</h2>
+                    <p style="font-size: 0.9rem; color: #7f8c8d; margin-top: 5px; font-weight: normal;">Acesse sua conta para continuar seus estudos</p>
+                </div>
+            </f:facet>
+
+            <h:form id="formLogin">
+                <p:messages id="mensagens" closable="true" showDetail="true" skipSerializedMessages="false">
+                    <p:autoUpdate />
+                </p:messages>
+
+                <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <p:outputLabel for="email" value="E-mail:" style="font-weight: 600;" />
+                        <p:inputText id="email" value="#{loginBean.email}" required="true" 
+                                     requiredMessage="Informe seu e-mail"
+                                     placeholder="seu@email.com" style="width: 100%;" />
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <p:outputLabel for="senha" value="Senha:" style="font-weight: 600;" />
+                        <p:password id="senha" value="#{loginBean.senha}" required="true" 
+                                    requiredMessage="Informe sua senha"
+                                    toggleMask="true" feedback="false" style="width: 100%;" />
+                    </div>
+
+                    <p:commandButton value="Entrar" action="#{loginBean.login}" 
+                                     icon="pi pi-sign-in" update="@form" 
+                                     style="width: 100%; margin-top: 10px; background-color: #1e3c72; border-color: #1e3c72;" />
+
+                    <p:divider />
+
+                    <div style="text-align: center; font-size: 0.95rem;">
+                        Não tem uma conta? 
+                        <p:link outcome="cadastro" value="Cadastre-se gratuitamente" style="color: #1e3c72; font-weight: bold;" />
+                    </div>
+                </div>
+            </h:form>
+        </p:card>
+    </div>
+
+</h:body>
+</html>

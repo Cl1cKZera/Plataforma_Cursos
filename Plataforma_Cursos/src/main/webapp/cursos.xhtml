@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="primefaces">
+
+<h:head>
+    <title>Cursos Disponíveis - Plataforma de Educação Financeira</title>
+</h:head>
+
+<h:body style="background-color: #f4f6f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px;">
+
+    <div style="max-width: 1100px; margin: 0 auto;">
+        
+        <!-- Barra de Navegação -->
+        <h:form id="formTopBar">
+            <p:toolbar style="margin-bottom: 25px; border-radius: 8px;">
+                <f:facet name="left">
+                    <span style="font-weight: bold; font-size: 1.1rem; color: #1e3c72;">
+                        <i class="pi pi-book" style="margin-right: 8px;"></i>
+                        Catálogo de Cursos
+                    </span>
+                </f:facet>
+                <f:facet name="right">
+                    <p:button value="Meu Painel" icon="pi pi-home" outcome="/index" styleClass="ui-button-outlined" />
+                </f:facet>
+            </p:toolbar>
+        </h:form>
+
+        <!-- Listagem de Cursos em Formato de Grade (Cards) -->
+        <h:form id="formCursos">
+            <p:dataView var="curso" value="#{cursoBean.cursos}" layout="grid"
+                        gridIcon="pi pi-th-large" listIcon="pi pi-bars"
+                        emptyMessage="Nenhum curso publicado no momento. Novos conteúdos serão lançados em breve!">
+
+                <p:dataViewGridItem>
+                    <p:card style="margin: 10px; min-height: 240px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border-radius: 8px;">
+                        <f:facet name="title">
+                            <span style="color: #2c3e50; font-size: 1.2rem;">#{curso.titulo}</span>
+                        </f:facet>
+
+                        <p style="color: #666; line-height: 1.5; font-size: 0.95rem; margin-top: 5px;">
+                            #{empty curso.descricao ? 'Curso prático e didático sobre conceitos essenciais de finanças e investimentos.' : curso.descricao}
+                        </p>
+
+                        <f:facet name="footer">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                                <span style="font-size: 0.85rem; color: #888;">
+                                    <i class="pi pi-calendar" style="margin-right: 4px;"></i>
+                                    #{curso.dataCriacao.dayOfMonth}/#{curso.dataCriacao.monthValue}/#{curso.dataCriacao.year}
+                                </span>
+                                <p:button value="Acessar Módulos" icon="pi pi-arrow-right" 
+                                          styleClass="ui-button-success ui-button-sm" />
+                            </div>
+                        </f:facet>
+                    </p:card>
+                </p:dataViewGridItem>
+
+            </p:dataView>
+        </h:form>
+
+    </div>
+
+</h:body>
+</html>
