@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="primefaces">
+
+<h:head>
+    <title>Gestão de Cursos - Painel Administrativo</title>
+</h:head>
+
+<h:body style="background-color: #f4f6f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px;">
+
+    <div style="max-width: 1100px; margin: 0 auto;">
+        
+        <!-- Barra Superior -->
+        <h:form id="formTop">
+            <p:toolbar style="margin-bottom: 20px; border-radius: 8px;">
+                <f:facet name="left">
+                    <span style="font-weight: bold; font-size: 1.1rem; color: #1e3c72;">
+                        <i class="pi pi-cog" style="margin-right: 8px;"></i>
+                        Gestão de Cursos (ADMIN)
+                    </span>
+                </f:facet>
+                <f:facet name="right">
+                    <p:button value="Voltar ao Início" icon="pi pi-home" outcome="/index" styleClass="ui-button-outlined" style="margin-right: 10px;" />
+                    <p:commandButton value="Novo Curso" icon="pi pi-plus" 
+                                     actionListener="#{cursoBean.novoCurso}" 
+                                     update=":dialogCursoForm" 
+                                     oncomplete="PF('dialogCurso').show()" 
+                                     styleClass="ui-button-success" />
+                </f:facet>
+            </p:toolbar>
+        </h:form>
+
+        <p:growl id="growl" showDetail="true" skipSerializedMessages="false">
+            <p:autoUpdate />
+        </p:growl>
+
+        <!-- Tabela de Cursos Cadastrados -->
+        <h:form id="formTabela">
+            <p:dataTable id="tabelaCursos" var="c" value="#{cursoBean.cursos}" 
+                         emptyMessage="Nenhum curso cadastrado ainda." 
+                         style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+
+                <p:column headerText="ID" style="width: 60px; text-align: center;">
+                    <h:outputText value="#{c.id}" />
+                </p:column>
+
+                <p:column headerText="Título" sortBy="#{c.titulo}">
+                    <strong><h:outputText value="#{c.titulo}" /></strong>
+                </p:column>
+
+                <p:column headerText="Status" style="width: 130px; text-align: center;">
+                    <p:tag value="#{c.publicado ? 'PUBLICADO' : 'RASCUNHO'}" 
+                           severity="#{c.publicado ? 'success' : 'warning'}" />
+                </p:column>
+
+                <p:column headerText="Ações" style="width: 250px; text-align: center;">
+                    <!-- Botão de Editar -->
+                    <p:commandButton icon="pi pi-pencil" title="Editar Curso"
+                                     actionListener="#{cursoBean.prepararEdicao(c)}" 
+                                     update=":dialogCursoForm" 
+                                     oncomplete="PF('dialogCurso').show()" 
+                                     styleClass="ui-button-warning ui-button-flat" style="margin-right: 5px;" />
+
+                    <!-- Botão Publicar / Despublicar -->
+                    <p:commandButton icon="#{c.publicado ? 'pi pi-eye-slash' : 'pi pi-eye'}" 
+                                     value="#{c.publicado ? 'Despublicar' : 'Publicar'}"
+                                     actionListener="#{cursoBean.alternarPublicacao(c)}" 
+                                     update="tabelaCursos"
+                                     styleClass="#{c.publicado ? 'ui-button-outlined ui-button-secondary' : 'ui-button-outlined ui-button-success'}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <!-- Diálogo Modal para Criar/Editar Curso -->
+        <p:dialog header="Dados do Curso" widgetVar="dialogCurso" modal="true" 
+                  responsive="true" width="500" showEffect="fade" hideEffect="fade">
+            <h:form id="dialogCursoForm">
+                <div style="display: flex; flex-direction: column; gap: 15px; padding-top: 10px;">
+                    <div>
+                        <p:outputLabel for="titulo" value="Título do Curso:" style="font-weight: 600;" />
+                        <p:inputText id="titulo" value="#{cursoBean.cursoSelecionado.titulo}" 
+                                     required="true" requiredMessage="O título é obrigatório" 
+                                     placeholder="Ex: Introdução à Renda Variável" style="width: 100%; margin-top: 5px;" />
+                    </div>
+
+                    <div>
+                        <p:outputLabel for="descricao" value="Descrição Geral:" style="font-weight: 600;" />
+                        <p:inputTextarea id="descricao" value="#{cursoBean.cursoSelecionado.descricao}" 
+                                         rows="4" placeholder="Breve resumo sobre o curso..." style="width: 100%; margin-top: 5px;" />
+                    </div>
+
+                    <div style="text-align: right; margin-top: 10px;">
+                        <p:commandButton value="Cancelar" onclick="PF('dialogCurso').hide()" 
+                                         type="button" styleClass="ui-button-secondary ui-button-flat" style="margin-right: 8px;" />
+                        <p:commandButton value="Salvar" actionListener="#{cursoBean.salvar}" 
+                                         update=":formTabela:tabelaCursos dialogCursoForm" 
+                                         icon="pi pi-check" styleClass="ui-button-success" />
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+
+    </div>
+
+</h:body>
+</html>

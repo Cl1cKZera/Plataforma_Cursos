@@ -45,8 +45,11 @@
 
             <p:divider />
 
-            <div style="display: flex; gap: 10px; margin-top: 15px;">
-                <p:button value="Próxima Etapa: Cursos" icon="pi pi-arrow-right" styleClass="ui-button-success" disabled="true" />
+                       <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+                <p:button value="Ver Cursos Disponíveis" outcome="/cursos" icon="pi pi-book" styleClass="ui-button-primary" />
+                <p:button value="Gerenciar Cursos (ADMIN)" outcome="/admin/cursos" 
+                          icon="pi pi-cog" styleClass="ui-button-warning" 
+                          rendered="#{loginBean.admin}" />
             </div>
         </p:panel>
     </div>
